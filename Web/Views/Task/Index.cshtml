@@ -1,0 +1,66 @@
+﻿@using Domain.Enums
+@model Response<List<TaskDto>>
+
+@{
+    var tasks = Model.Data;
+    int i = 1;
+}
+
+
+<div style="margin-top: 20px">
+    <a type="button" href="/task/create" class="btn btn-primary">Create Task</a>
+    <div class="col-md-7 mt-4">
+        <form class="d-flex gap-1">  
+            <input class="form-control" name="UserName" type="search" placeholder="User name" aria-label="Search">
+            <input class="form-control" name="CategoryName" type="search" placeholder="Category name" aria-label="Search">
+            <select name="TaskPriority" class="form-control">
+                <option value="">All</option>
+                <option value="@TaskPriority.Low">Low</option>
+                <option value="@TaskPriority.Medium">Medium</option>
+                <option value="@TaskPriority.High">High</option>
+            </select>
+            <select name="IsComleted" class="form-control">
+                <option value="">All</option>
+                <option value="@false">Not completed</option>
+                <option value="@true">Completed</option>
+            </select>
+            
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </div>
+    <table style="margin-top: 20px" class="table table-hover">
+        <tr>
+            <td><b>#</b></td>
+            <td><b>Title</b></td>
+            <td><b>Description</b></td>
+            <td><b>User name</b></td>
+            <td><b>Category name</b></td>
+            <td><b>Priority</b></td>
+            <td><b>IsCompeted</b></td>
+            <td><b>Action</b></td>
+        </tr>
+        @foreach (var task in tasks)
+        {
+            <tr>
+                <td>@(i++)</td>
+                <td>@task.Title</td>
+                <td>@task.Description</td>
+                <td>@task.UserName</td>
+                <td>@task.CategoryName</td>
+                <td>@(task.TaskPriority)</td>
+                @if (task.IsComleted)
+                {
+                    <td>Completed</td>
+                }
+                else
+                {
+                    <td>Not completed</td>
+                }
+                <td>
+                    <a class="text-decoration-none" href="/task/edit/@task.Id">Edit</a>
+                    <a class="text-decoration-none" style="margin-left: 5px" href="/task/delete/@task.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

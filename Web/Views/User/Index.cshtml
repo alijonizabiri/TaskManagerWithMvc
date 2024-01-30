@@ -1,0 +1,38 @@
+﻿@model Response<List<UserDto>>
+
+<div style="margin-top: 20px">
+    <a type="button" href="/user/create" class="btn btn-primary">Create user</a>
+    <div class="col-md-5 mt-4">
+        <form class="d-flex gap-1">  
+            <input class="form-control" name="Name" type="search" placeholder="Name" aria-label="Search">
+            <input class="form-control" name="PhoneNumber" type="search" placeholder="Phone number" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </div>
+    <table style="margin-top: 20px" class="table table-hover">
+        <tr>
+            <td><b>#</b></td>
+            <td><b>First name</b></td>
+            <td><b>Last name</b></td>
+            <td><b>Phone number</b></td>
+            <td><b>Action</b></td>
+        </tr>
+        @{
+            var users = Model.Data;
+            int i = 1;
+        }
+        @foreach (var user in users)
+        {
+            <tr>
+                <td>@(i++)</td>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.PhoneNumber</td>
+                <td>
+                    <a class="text-decoration-none" href="/user/edit/@user.Id">Edit</a>
+                    <a class="text-decoration-none" style="margin-left: 5px" href="/user/delete/@user.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
